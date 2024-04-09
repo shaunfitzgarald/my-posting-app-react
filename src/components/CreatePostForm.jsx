@@ -39,4 +39,5 @@ function CreatePostForm({ onNewPost }) {
   );
 }
 
+
 export default CreatePostForm;
