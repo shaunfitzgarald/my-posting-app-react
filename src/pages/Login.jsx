@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import API from '../api/api';  
+import { useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
+    const navigate = useNavigate();
     const [credentials, setCredentials] = useState({
         email: '',
         password: ''
@@ -20,6 +22,7 @@ const Login = (props) => {
                 if (response.data.jwt) {
                     localStorage.setItem('jwt', response.data.jwt);
                     props.handleSuccessfulAuth(response.data.user);
+                    navigate('/dashboard');
                 } else {
                     setLoginErrors('Login failed. Please check your credentials.');
                 }
