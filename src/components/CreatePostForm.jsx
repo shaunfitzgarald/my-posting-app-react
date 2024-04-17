@@ -7,20 +7,25 @@ function CreatePostForm({ onNewPost }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Post to the API
-    const response = await fetch('http://localhost:3000/posts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ post: { content } }),
-    });
-
-    if (response.ok) {
-      const newPost = await response.json();
-      onNewPost(newPost);
-      setContent('');
+  
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/posts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ post: { content } }),
+      });
+  
+      if (response.ok) {
+        const newPost = await response.json();
+        onNewPost(newPost);
+        setContent('');
+      } else {
+        console.error("HTTP Error:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error.message);
     }
   };
 
